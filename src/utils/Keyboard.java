@@ -65,7 +65,13 @@ public class Keyboard {
                 }
 
             }
+
         };
+
+    }
+
+    public KeyListener getKeyListener() {
+        return keyListener;
 
     }
 
