@@ -37,7 +37,9 @@ public class Main {
         keyboard = new Keyboard();
         mouse = new Mouse();
 
-        // Adding to main window;
+        Bullet b = new Bullet(1, 10, true, windowWidth/2, windowHeight/2, 1);
+        // Adding to main window
+        MainFrame.add(b.getOutput());
         MainFrame.add(MainGame);
         MainFrame.addKeyListener(keyboard.getKeyListener());
         MainFrame.addMouseListener(mouse.getMouseListener());
@@ -45,9 +47,19 @@ public class Main {
 
         MainFrame.setVisible(true);
 
+
         // Game loop
         while(true) {
+            b.update();
+            waitMillis(1000);
 
+        }
+
+    }
+
+    public static void waitMillis(long time) {
+        long targetTime = System.currentTimeMillis() + time;
+        while(targetTime > System.currentTimeMillis()) {
 
         }
 
