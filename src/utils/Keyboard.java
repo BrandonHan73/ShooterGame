@@ -1,5 +1,8 @@
 package utils;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 public class Keyboard {
 
     // Constants
@@ -13,6 +16,8 @@ public class Keyboard {
     public static final int s = 7;
     public static final int d = 8;
 
+    private KeyListener keyListener;
+
     private boolean[] keys;
 
     public Keyboard() {
@@ -22,6 +27,45 @@ public class Keyboard {
             keys[i] = false;
 
         }
+
+        keyListener = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                char key = e.getKeyChar();
+                switch(key) {
+                    case '1': keys[Keyboard.one] = true; break;
+                    case '2': keys[Keyboard.two] = true; break;
+                    case '3': keys[Keyboard.three] = true; break;
+                    case '4': keys[Keyboard.four] = true; break;
+                    case 'w': keys[Keyboard.w] = true; break;
+                    case 'a': keys[Keyboard.a] = true; break;
+                    case 's': keys[Keyboard.s] = true; break;
+                    case 'd': keys[Keyboard.d] = true; break;
+
+                }
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                char key = e.getKeyChar();
+                switch(key) {
+                    case '1': keys[Keyboard.one] = false; break;
+                    case '2': keys[Keyboard.two] = false; break;
+                    case '3': keys[Keyboard.three] = false; break;
+                    case '4': keys[Keyboard.four] = false; break;
+                    case 'w': keys[Keyboard.w] = false; break;
+                    case 'a': keys[Keyboard.a] = false; break;
+                    case 's': keys[Keyboard.s] = false; break;
+                    case 'd': keys[Keyboard.d] = false; break;
+
+                }
+
+            }
+        };
 
     }
 
