@@ -23,16 +23,17 @@ public class Main {
         MainFrame.setResizable(false);
         MainFrame.setLayout(null);
         MainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        MainFrame.setVisible(true);
 
         // Set up game
-        MainGame = new Game();
+        MainGame = new Game(windowWidth, windowHeight);
 
         // Adding to main window;
         MainFrame.add(MainGame.get());
 
         // Setting bounds
         MainGame.get().setBounds(0, 0, windowWidth, windowHeight);
+
+        MainFrame.setVisible(true);
 
     }
 

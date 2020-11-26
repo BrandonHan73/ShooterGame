@@ -4,16 +4,32 @@ import javax.swing.*;
 
 public class Game {
 
+    // Constants
+    private int frameWidth, frameHeight;
+    private final ImageIcon backgroundPNG = new ImageIcon("src/images/background.png");
+
+    // Main panel
     private JPanel MainPanel;
 
-    public Game() {
+    // Background
+    private JLabel Background;
+
+    public Game(int width, int height) {
+
+        // Set up constants
+        frameWidth = width;
+        frameHeight = height;
+
+        // Set up main panel
         MainPanel = new JPanel();
+        MainPanel.setSize(frameWidth, height);
 
-        MainPanel.setSize(1000, 1000);
+        // Set up background
+        Background = new JLabel(backgroundPNG);
+        Background.setBounds(0, 0, frameWidth, frameHeight);
 
-        JLabel jl = new JLabel(new ImageIcon("D:/Pictures/FinishedProblems.PNG"));
-        jl.setBounds(0, 0, 1920, 1160);
-        MainPanel.add(jl);
+        // Add to main panel
+        MainPanel.add(Background);
 
     }
 
