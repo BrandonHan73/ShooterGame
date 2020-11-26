@@ -5,7 +5,8 @@ import javax.swing.*;
 public class Main {
 
     // Constants
-
+    static final int windowWidth = 1900;
+    static final int windowHeight = 1100;
 
     // Main window
     private static JFrame MainFrame;
@@ -18,13 +19,20 @@ public class Main {
 
         // Set up main window
         MainFrame = new JFrame("Shooter Game");
-        MainFrame.setSize(1900, 1100);
+        MainFrame.setSize(windowWidth, windowHeight);
+        MainFrame.setResizable(false);
         MainFrame.setLayout(null);
         MainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         MainFrame.setVisible(true);
 
-        // Set up game;
+        // Set up game
         MainGame = new Game();
+
+        // Adding to main window;
+        MainFrame.add(MainGame.get());
+
+        // Setting bounds
+        MainGame.get().setBounds(0, 0, windowWidth, windowHeight);
 
     }
 
