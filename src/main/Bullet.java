@@ -5,7 +5,7 @@ import utils.Math2;
 
 import javax.swing.*;
 
-public class Bullet {
+public class Bullet extends JLabel {
 
     // Constants
     private static int sizeX = 50;
@@ -18,8 +18,6 @@ public class Bullet {
     private Coordinate coords;
     private double health;
 
-    private JLabel output = new JLabel(new ImageIcon("D:/Pictures/FinishedProblems.PNG"));
-
     public Bullet(double slope, double speed, boolean direction, double startX, double startY, double health) {
         this.slope = slope;
         this.yInt = 0-(slope * startX) + startY;
@@ -30,14 +28,9 @@ public class Bullet {
 
     }
 
-    public JLabel getOutput() {
-        return output;
-
-    }
-
     public void update() {
         move();
-        output.setBounds(coords.getIntX() - (sizeX / 2), coords.getIntY() - (sizeY / 2), sizeX, sizeY);
+        setBounds(coords.getIntX() - (sizeX / 2), coords.getIntY() - (sizeY / 2), sizeX, sizeY);
 
     }
 
