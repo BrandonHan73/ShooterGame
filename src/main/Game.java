@@ -2,14 +2,17 @@ package main;
 
 import javax.swing.*;
 
-public class Game extends JPanel {
+public class Game extends JLabel {
 
     // Constants
     private int frameWidth, frameHeight;
     private final ImageIcon backgroundPNG = new ImageIcon("src/images/background.png");
 
     // Background
-    private JLabel Background;
+    private JLabel bkg;
+
+    // Player
+    private Player player;
 
     public Game(int width, int height) {
 
@@ -19,13 +22,18 @@ public class Game extends JPanel {
 
         // Set up panel
         setSize(frameWidth, height);
+        setLayout(null);
 
         // Set up background
-        Background = new JLabel(backgroundPNG);
-        Background.setBounds(0, 0, frameWidth, frameHeight);
+        bkg = new JLabel(backgroundPNG);
+        bkg.setBounds(0, 0, 7090, 4120);
+
+        // Set up player
+        player = new Player(frameWidth, frameHeight);
 
         // Add to panel
-        add(Background);
+        add(player);
+        add(bkg);
 
     }
 

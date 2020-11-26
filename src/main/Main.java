@@ -43,9 +43,6 @@ public class Main {
         MainFrame.addMouseListener(mouse.getMouseListener());
         MainFrame.addMouseMotionListener(mouse.getMouseMotionListener());
 
-        // Setting bounds
-        MainGame.setBounds(0, 0, windowWidth, windowHeight);
-
         MainFrame.setVisible(true);
 
         // Game loop
