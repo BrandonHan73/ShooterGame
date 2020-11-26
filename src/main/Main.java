@@ -38,15 +38,21 @@ public class Main {
         mouse = new Mouse();
 
         // Adding to main window;
-        MainFrame.add(MainGame.get());
+        MainFrame.add(MainGame);
         MainFrame.addKeyListener(keyboard.getKeyListener());
         MainFrame.addMouseListener(mouse.getMouseListener());
         MainFrame.addMouseMotionListener(mouse.getMouseMotionListener());
 
         // Setting bounds
-        MainGame.get().setBounds(0, 0, windowWidth, windowHeight);
+        MainGame.setBounds(0, 0, windowWidth, windowHeight);
 
         MainFrame.setVisible(true);
+
+        // Game loop
+        while(true) {
+
+
+        }
 
     }
 
