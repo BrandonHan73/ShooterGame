@@ -2,10 +2,21 @@ package main;
 
 import utils.Coordinate;
 
-public class Enemy {
+import javax.swing.*;
 
-    public int health;
-    public Coordinate coords;
+public class Enemy extends JLabel {
 
+    private int health;
+    private Coordinate coords;
 
+    public Enemy() {
+        coords = new Coordinate(600, 600);
+        setIcon(new ImageIcon("D:/Pictures/FinishedProblems.PNG"));
+
+    }
+
+    public Coordinate getCoords() {
+        return coords;
+
+    }
 }

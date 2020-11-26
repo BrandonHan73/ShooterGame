@@ -48,7 +48,9 @@ public class Main {
 
         // Game loop
         while(true) {
-            waitMillis(1000);
+            waitMillis(15);
+            MainGame.update(keyboard, mouse);
+            System.out.println("asdf");
 
         }
 

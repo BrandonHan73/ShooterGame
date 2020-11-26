@@ -6,15 +6,15 @@ import java.awt.event.KeyListener;
 public class Keyboard {
 
     // Constants
-    private final int numOfKeys = 4;
-    public static final int one = 1;
-    public static final int two = 2;
-    public static final int three = 3;
-    public static final int four = 4;
-    public static final int w = 5;
-    public static final int a = 6;
-    public static final int s = 7;
-    public static final int d = 8;
+    private final int numOfKeys = 8;
+    public static final int one = 0;
+    public static final int two = 1;
+    public static final int three = 2;
+    public static final int four = 3;
+    public static final int w = 4;
+    public static final int a = 5;
+    public static final int s = 6;
+    public static final int d = 7;
 
     private KeyListener keyListener;
 
