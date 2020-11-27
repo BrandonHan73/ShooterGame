@@ -26,7 +26,24 @@ public class Main {
         mainFrame.setLayout(null);
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        // Set up game
+        mainGame = new Game(windowWidth, windowHeight);
+
         mainFrame.setVisible(true);
+
+        // Game loop
+        while(true) {
+            mainGame.update();
+            mainInventory.update();
+            waitMillis(15);
+
+        }
+
+    }
+
+    private static void waitMillis(long time) {
+        long targetTime = System.currentTimeMillis() + time;
+        while(targetTime > System.currentTimeMillis()) {}
 
     }
 
