@@ -22,14 +22,14 @@ public class Background extends JLabel {
 
         setIcon(image);
 
-        System.out.println("Created background");
+//        System.out.println("Created background");
 
     }
 
     public void update(Coords playerLoc) {
         setBounds(playerLoc);
 
-        System.out.println("Updated background");
+//        System.out.println("Updated background");
 
     }
 
@@ -38,7 +38,7 @@ public class Background extends JLabel {
         iconWidth = image.getIconWidth();
         iconHeight = image.getIconHeight();
 
-        System.out.println("Changed background image");
+//        System.out.println("Changed background image");
 
     }
 
@@ -48,7 +48,7 @@ public class Background extends JLabel {
         y = (windowHeight / 2) - (int)playerLoc.getY();
         setBounds(x, y, iconWidth, iconHeight);
 
-        System.out.println("Set background location to " + x + ", " + y);
+//        System.out.println("Set background location to " + x + ", " + y);
 
     }
 

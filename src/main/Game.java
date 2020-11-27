@@ -20,12 +20,14 @@ public class Game extends JLabel {
         setBounds(0, 0, windowWidth, windowHeight);
 
         background = new Background("src/images/background.png", windowWidth, windowHeight);
-        player = new Player(new Coords(100, 100));
+        player = new Player("src/images/player", new Coords(100, 100), windowWidth, windowHeight);
         enemies = new Enemy();
+        Keyboard.init();
 
-        add(background);
         add(player);
         add(enemies);
+        add(background);
+        addKeyListener(Keyboard.getKeyListener());
 
     }
 
