@@ -103,7 +103,7 @@ public class Player extends JLabel {
         boolean permission = true;
 
         for(int i = (int)coords.getX() - (shadowWidth / 2); i < coords.getX() + (shadowWidth / 2); i++) for(int j = (int)coords.getY() - (shadowHeight / 2); j < coords.getY() + (shadowHeight / 2); j++) {
-            if(obstacleMap.getLoc(i, j)) {
+            if((0 <= i && i < windowWidth) && (0 <= j && j < windowHeight)) if(obstacleMap.getLoc(i, j)) {
                 permission = false;
                 break;
 

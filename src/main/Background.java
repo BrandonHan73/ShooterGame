@@ -19,7 +19,7 @@ public class Background extends JLabel {
         iconHeight = image.getIconHeight();
 
         obstacleMap = new Map(iconWidth, iconHeight);
-        obstacleMap.drawLine(new Coords(0, 0), new Coords(1000, 1000), true);
+        obstacleMap.drawLine(new Coords(0, 0), new Coords(0, 1000), true);
 
         setBounds(new Coords(0, 0));
 
