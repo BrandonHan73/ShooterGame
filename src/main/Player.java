@@ -6,6 +6,12 @@ public class Player extends JLabel {
 
     private final double speed = 5;
 
+    // Temporary
+    private JLabel upperText;
+    private JLabel lowerText;
+
+    private final double rt2 = Math.sqrt(2);
+
     private final ImageIcon shadowPNG = new ImageIcon("src/images/shadow.png");
     private final int shadowWidth = shadowPNG.getIconWidth();
     private final int shadowHeight = shadowPNG.getIconHeight();
@@ -40,6 +46,14 @@ public class Player extends JLabel {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
 
+        // Temporary
+        upperText = new JLabel();
+        lowerText = new JLabel();
+        upperText.setBounds(windowWidth / 2, windowHeight / 2 - 30, 200, 30);
+        lowerText.setBounds(windowWidth / 2, windowHeight / 2, 200, 30);
+        add(upperText);
+        add(lowerText);
+
         lookRight();
         armState = ArmState.IDLE;
         legState = LegState.IDLE;
@@ -51,17 +65,33 @@ public class Player extends JLabel {
         setBounds(0, 0, windowWidth, windowHeight);
 
         shadow = new JLabel(shadowPNG);
-        shadow.setBounds((windowWidth / 2) - (shadowWidth / 2), (windowHeight / 2) - (shadowWidth / 2), shadowWidth, shadowHeight);
+        shadow.setBounds((windowWidth / 2) - (shadowWidth / 2), (windowHeight / 2) - (shadowHeight / 2), shadowWidth, shadowHeight);
         add(shadow);
 
     }
 
     public void update() {
         move();
+        updateGraphics();
 
     }
 
     private void takeDamage() {}
+
+    private void updateGraphics() {
+        // Temporary
+        switch(armState) {
+            case IDLE: upperText.setText("idle"); break;
+            case SHOOTING: upperText.setText("shooting"); break;
+
+        }
+        switch(legState) {
+            case IDLE: lowerText.setText("idle"); break;
+            case MOVING: lowerText.setText("moving"); break;
+
+        }
+
+    }
 
     private void move() {
         boolean w = Keyboard.getKey(Keyboard.w);
@@ -74,9 +104,10 @@ public class Player extends JLabel {
         if(w && s) {w = false; s = false;}
         if(a && d) {a = false; d = false;}
 
-        if((w || s) && (a || d)) wantedDistance /= Math.sqrt(2);
+        if((w || s) && (a || d)) wantedDistance /= rt2;
 
-        if((w || s))
+        if((w || s) || (a || d)) legState = LegState.MOVING;
+        else legState = LegState.IDLE;
 
         if(w) coords.moveY(-wantedDistance);
         if(a) coords.moveX(-wantedDistance);

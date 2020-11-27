@@ -42,6 +42,18 @@ public class Background extends JLabel {
 
     }
 
+    public int getWindowWidth() {
+        int retVal = windowWidth;
+        return retVal;
+
+    }
+
+    public int getWindowHeight() {
+        int retVal = windowHeight;
+        return retVal;
+
+    }
+
     private void setBounds(Coords playerLoc) {
         int x, y;
         x = (windowWidth / 2) - (int)playerLoc.getX();
