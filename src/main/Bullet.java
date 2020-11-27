@@ -1,8 +1,11 @@
 package main;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
-public class Bullet {
+public class Bullet extends JLabel {
+
+    public static final int bulletWidth = 25, bulletHeight = 25;
 
     private int health;
     private Coords loc;
@@ -19,6 +22,7 @@ public class Bullet {
         vertical = false;
         this.speed = speed;
         this.slope = getSlope();
+        setIcon(new ImageIcon("D:/Pictures/FinishedProblems.png"));
 
     }
 
@@ -30,7 +34,7 @@ public class Bullet {
 
         }
         move();
-        System.out.println(loc);
+        setBounds();
 
     }
 
@@ -41,15 +45,7 @@ public class Bullet {
     }
 
     private void move() {
-        double xDiff = speed / Math.sqrt(Math.pow(slope, 2) + 1);
-        double yDiff = slope * xDiff;
-        if(vertical) {
-            xDiff = 0;
-            yDiff = speed;
-
-        }
-        loc.moveX(xDiff);
-        loc.moveY(yDiff);
+        loc.moveSDV(slope, speed, vertical);
 
     }
 
@@ -67,6 +63,11 @@ public class Bullet {
             return 0;
 
         } else return num / den;
+
+    }
+
+    private void setBounds() {
+        setBounds((int)loc.getX() - (bulletWidth / 2), (int)loc.getY() - (bulletHeight / 2), bulletWidth, bulletHeight);
 
     }
 

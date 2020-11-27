@@ -31,6 +31,19 @@ public class Coords {
 
     }
 
+    public void moveSDV(double slope, double distance, boolean isVertical) {
+        double xDiff = distance / Math.sqrt(Math.pow(slope, 2) + 1);
+        double yDiff = slope * xDiff;
+        if(isVertical) {
+            xDiff = 0;
+            yDiff = distance;
+
+        }
+        x += xDiff;
+        y += yDiff;
+
+    }
+
     public double getX() {
         double retVal = x;
         return retVal;

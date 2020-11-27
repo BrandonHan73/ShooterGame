@@ -53,7 +53,7 @@ public class Mouse {
     }
 
     public static Coords getCoords() {
-        Coords retVal = new Coords(coords.getX(), coords.getY());
+        Coords retVal = new Coords(coords.getX() - 8, coords.getY() - 31);
         return retVal;
 
     }

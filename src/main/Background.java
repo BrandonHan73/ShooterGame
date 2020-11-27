@@ -8,7 +8,7 @@ public class Background extends JLabel {
 
     private Map obstacleMap;
 
-    private Bullet bullet;
+    private BulletList bullets;
 
     private ImageIcon image;
     private int iconWidth, iconHeight;
@@ -27,7 +27,8 @@ public class Background extends JLabel {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
 
-        bullet = new Bullet(3, new Coords(0, 0), 3);
+        bullets = new BulletList(iconWidth, iconHeight);
+        add(bullets);
 
         setIcon(image);
 
@@ -36,12 +37,7 @@ public class Background extends JLabel {
     public void update(Coords playerLoc, EnemyList enemies) {
         setBounds(playerLoc);
 
-        if(Mouse.getM1()) {
-            bullet = new Bullet(1, playerLoc, 3);
-
-        }
-
-        bullet.update(enemies);
+        bullets.update(playerLoc, 1, 10, enemies);
 
 //        System.out.println("Updated background");
 
