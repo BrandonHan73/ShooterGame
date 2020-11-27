@@ -14,9 +14,6 @@ public class EnemyList extends JLabel {
     private int frameWidth, frameHeight;
     private int bkgWidth, bkgHeight;
 
-    private BulletZone bulletZone;
-    private BulletZone deathZone;
-
     private ArrayList<Enemy> mainList;
 
     public EnemyList(int spawnRate, int frameWidth, int frameHeight, int bkgWidth, int bkgHeight) {
@@ -24,9 +21,6 @@ public class EnemyList extends JLabel {
         random = new Random();
 
         setBounds(0, 0, frameWidth, frameHeight);
-
-        bulletZone = new BulletZone();
-        deathZone = new BulletZone();
 
         this.spawnRate = spawnRate;
         spawnTime = System.currentTimeMillis();

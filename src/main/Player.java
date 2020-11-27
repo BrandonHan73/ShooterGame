@@ -28,9 +28,6 @@ public class Player extends JLabel {
 
     private int windowWidth, windowHeight;
 
-    private BulletZone bulletZone;
-    private BulletZone deathZone;
-
     public enum ArmState {
         IDLE, SHOOTING
 
@@ -59,8 +56,6 @@ public class Player extends JLabel {
         legState = LegState.IDLE;
 
         coords = new Coords(loc.getX(), loc.getY());
-        bulletZone = new BulletZone();
-        deathZone = new BulletZone();
 
         setBounds(0, 0, windowWidth, windowHeight);
 
@@ -70,8 +65,8 @@ public class Player extends JLabel {
 
     }
 
-    public void update() {
-        move();
+    public void update(Map obstacleMap) {
+        safeMove(obstacleMap);
         shoot();
         updateGraphics();
 
@@ -97,6 +92,26 @@ public class Player extends JLabel {
     private void shoot() {
         if(Mouse.getM1()) armState = ArmState.SHOOTING;
         else armState = ArmState.IDLE;
+
+    }
+
+    private void safeMove(Map obstacleMap) {
+        Coords startPoint = new Coords(coords.getX(), coords.getY());
+
+        move();
+
+        boolean permission = true;
+
+        for(int i = (int)coords.getX() - (shadowWidth / 2); i < coords.getX() + (shadowWidth / 2); i++) for(int j = (int)coords.getY() - (shadowHeight / 2); j < coords.getY() + (shadowHeight / 2); j++) {
+            if(obstacleMap.getLoc(i, j)) {
+                permission = false;
+                break;
+
+            }
+
+        }
+
+        if(!permission) coords = new Coords(startPoint.getX(), startPoint.getY());
 
     }
 

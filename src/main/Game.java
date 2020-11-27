@@ -7,7 +7,6 @@ public class Game extends JLabel {
     private int windowWidth, windowHeight;
 
     private Coords playerCoords;
-    private BulletZone enemyBulletZone, playerBulletZone;
 
     private Background background;
     private Player player;
@@ -20,7 +19,7 @@ public class Game extends JLabel {
         setBounds(0, 0, windowWidth, windowHeight);
 
         background = new Background("src/images/background.png", windowWidth, windowHeight);
-        player = new Player("src/images/player", new Coords(100, 100), windowWidth, windowHeight);
+        player = new Player("src/images/player", new Coords(1000, 100), windowWidth, windowHeight);
         enemies = new EnemyList(1000, windowWidth, windowHeight, background.getIconWidth(), background.getIconHeight());
 
         add(player);
@@ -30,7 +29,7 @@ public class Game extends JLabel {
     }
 
     public void update() {
-        player.update();
+        player.update(background.getObstacleMap());
 
         playerCoords = player.getLoc();
 

@@ -6,6 +6,9 @@ public class Background extends JLabel {
 
     private int windowWidth, windowHeight;
 
+    private Map obstacleMap;
+    private Map playerBullets, enemyBullets;
+
     private ImageIcon image;
     private int iconWidth, iconHeight;
 
@@ -15,14 +18,15 @@ public class Background extends JLabel {
         iconWidth = image.getIconWidth();
         iconHeight = image.getIconHeight();
 
+        obstacleMap = new Map(iconWidth, iconHeight);
+        obstacleMap.drawLine(new Coords(0, 0), new Coords(1000, 1000), true);
+
         setBounds(new Coords(0, 0));
 
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
 
         setIcon(image);
-
-//        System.out.println("Created background");
 
     }
 
@@ -39,6 +43,11 @@ public class Background extends JLabel {
         iconHeight = image.getIconHeight();
 
 //        System.out.println("Changed background image");
+
+    }
+
+    public Map getObstacleMap() {
+        return obstacleMap;
 
     }
 

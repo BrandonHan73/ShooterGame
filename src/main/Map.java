@@ -45,4 +45,10 @@ public class Map {
 
     }
 
+    public boolean getLoc(int x, int y) {
+        boolean retVal = map[x][y];
+        return retVal;
+
+    }
+
 }
