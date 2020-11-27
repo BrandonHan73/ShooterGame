@@ -5,17 +5,13 @@ import javax.swing.*;
 public class Main {
 
     // Constants
-    public static int windowWidth = 1900;
-    public static int windowHeight = 1100;
+    public static final int windowWidth = 1900;
+    public static final int windowHeight = 1100;
 
     private static JFrame mainFrame;
 
     private static Game mainGame;
     private static Inventory mainInventory;
-
-    // Inputs
-    private static Keyboard keyboard;
-    private static Mouse mouse;
 
     public static void main(String[] args) {
 
@@ -30,26 +26,28 @@ public class Main {
         mainGame = new Game(windowWidth, windowHeight);
         mainInventory = new Inventory();
 
+        // Set up inputs
+        Keyboard.init();
+        Mouse.init();
+
         // Add to frame
         mainFrame.add(mainGame);
         mainFrame.add(mainInventory);
         mainFrame.addKeyListener(Keyboard.getKeyListener());
+        mainFrame.addMouseListener(Mouse.getMouseListener());
+        mainFrame.addMouseMotionListener(Mouse.getMouseMotionListener());
 
         mainFrame.setVisible(true);
 
         // Game loop
+        long loopStartTime;
         while(true) {
+            loopStartTime = System.currentTimeMillis();
             mainGame.update();
             mainInventory.update();
-            waitMillis(15);
+            while(System.currentTimeMillis() - loopStartTime < 15) {}
 
         }
-
-    }
-
-    private static void waitMillis(long time) {
-        long targetTime = System.currentTimeMillis() + time;
-        while(targetTime > System.currentTimeMillis()) {}
 
     }
 

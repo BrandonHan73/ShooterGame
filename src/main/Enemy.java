@@ -1,18 +1,19 @@
 package main;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Random;
 
 public class Enemy extends JLabel {
 
+    private final static int speed = 5;
+
     private int health;
-    private Random random;
 
     private State state;
     private long dyingTimer;
 
     private int windowWidth, windowHeight;
-    private int bkgWidth, bkgHeight;
 
     private Coords coords;
 
@@ -21,22 +22,19 @@ public class Enemy extends JLabel {
 
     }
 
-    public Enemy(int windowWidth, int frameHeight, int bkgWidth, int bkgHeight) {
+    public Enemy(int windowWidth, int frameHeight, int bkgWidth, int bkgHeight, Random random) {
 
         this.windowWidth = windowWidth;
         this.windowHeight = frameHeight;
-        this.bkgWidth = bkgWidth;
-        this.bkgHeight = bkgHeight;
-
-        random = new Random();
 
         health = 1000;
 
-        coords = new Coords(random.nextInt(1000), random.nextInt(1000));
+        coords = new Coords(random.nextInt(bkgWidth), random.nextInt(bkgHeight));
 
     }
 
     public void update(Coords playerLoc) {
+        updateState(playerLoc);
         setBounds(playerLoc);
 
         health--;
@@ -44,7 +42,13 @@ public class Enemy extends JLabel {
 
     }
 
-    private void checkDeath() {
+    private void updateState(Coords playerLoc) {
+        if(coords.distanceFrom(playerLoc) < 100) {
+            state = State.ATTACKING;
+            state = State.DYING;
+            dyingTimer = System.currentTimeMillis();
+
+        }
         if(health <= 0 && state != State.DYING && state != State.DEAD) {
             state = State.DYING;
             dyingTimer = System.currentTimeMillis();
@@ -57,8 +61,9 @@ public class Enemy extends JLabel {
 
     }
 
-    public int getHealth() {
-        return health;
+    public boolean isDead() {
+        if(state == State.DEAD) return true;
+        else return false;
 
     }
 

@@ -72,6 +72,7 @@ public class Player extends JLabel {
 
     public void update() {
         move();
+        shoot();
         updateGraphics();
 
     }
@@ -90,6 +91,12 @@ public class Player extends JLabel {
             case MOVING: lowerText.setText("moving"); break;
 
         }
+
+    }
+
+    private void shoot() {
+        if(Mouse.getM1()) armState = ArmState.SHOOTING;
+        else armState = ArmState.IDLE;
 
     }
 
