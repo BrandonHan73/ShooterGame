@@ -22,13 +22,13 @@ public class Main {
         mainFrame.setLayout(null);
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        // Set up variables
-        mainGame = new Game(windowWidth, windowHeight);
-        mainInventory = new Inventory();
-
         // Set up inputs
         Keyboard.init();
         Mouse.init();
+
+        // Set up variables
+        mainGame = new Game(windowWidth, windowHeight);
+        mainInventory = new Inventory();
 
         // Add to frame
         mainFrame.add(mainGame);

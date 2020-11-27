@@ -27,7 +27,7 @@ public class Background extends JLabel {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
 
-        bullet = new Bullet(3, new Coords(0, 0), 3, 3);
+        bullet = new Bullet(3, new Coords(0, 0), 3);
 
         setIcon(image);
 
@@ -37,7 +37,7 @@ public class Background extends JLabel {
         setBounds(playerLoc);
 
         if(Mouse.getM1()) {
-            bullet = new Bullet(1, playerLoc, 3, 3);
+            bullet = new Bullet(1, playerLoc, 3);
 
         }
 
