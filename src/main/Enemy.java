@@ -114,4 +114,22 @@ public class Enemy extends JLabel {
 
     }
 
+    public boolean containsLineSegment(double slope, double yInt, double lowXBound, double highXBound) {
+        boolean retVal = false;
+        Coords upLeft = new Coords(coords.getX() - (hitboxWidth / 2), coords.getY() - hitboxHeight);
+        Coords downRight = new Coords(coords.getX() + (hitboxWidth / 2), coords.getY());
+        if(lowXBound <= downRight.getX() && highXBound >= upLeft.getX()) {
+            retVal = true;
+            double enterLoc = (slope * upLeft.getX()) + yInt;
+            double exitLoc = (slope * downRight.getX()) + yInt;
+            if((enterLoc < upLeft.getY() && exitLoc < upLeft.getY()) || (enterLoc > downRight.getY() && exitLoc > downRight.getY())) {
+                retVal = false;
+
+            }
+
+        }
+        return retVal;
+
+    }
+
 }

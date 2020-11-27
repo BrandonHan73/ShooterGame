@@ -7,7 +7,7 @@ public class BulletList extends JLabel {
 
     private ArrayList<Bullet> mainList;
 
-    private int cooldown = 100;
+    private int cooldown = 400;
     private long fireTime;
 
     private int bkgWidth, bkgHeight;
@@ -28,7 +28,6 @@ public class BulletList extends JLabel {
             if(i == mainList.size()) continue;
             mainList.get(i).update(enemies);
             if(mainList.get(i).getLoc().getX() < 0 || mainList.get(i).getX() > bkgWidth || mainList.get(i).getLoc().getY() < 0 || mainList.get(i).getY() > bkgHeight) {
-                System.out.println("removing bullet");
                 remove(mainList.get(i));
                 mainList.remove(i);
 

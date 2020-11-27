@@ -8,7 +8,7 @@ public class Bullet extends JLabel {
     public static final int bulletWidth = 25, bulletHeight = 25;
 
     private int health;
-    private Coords loc;
+    private Coords loc, startLoc;
     private double slope;
     private boolean vertical;
     private boolean isGoingLeft;
@@ -19,6 +19,7 @@ public class Bullet extends JLabel {
     public Bullet(int piercePower, Coords startLoc, int speed) {
         health = piercePower;
         loc = new Coords(startLoc.getX(), startLoc.getY());
+        this.startLoc = new Coords(startLoc.getX(), startLoc.getY());
         vertical = false;
         this.speed = speed;
         this.slope = getSlope();
@@ -27,13 +28,21 @@ public class Bullet extends JLabel {
     }
 
     public void update(EnemyList enemies) {
-//        updateList = new ArrayList<Enemy>();
-        for(int i = 0; i < enemies.getListSize(); i++) {
-            if(enemies.getEnemy(i).contains(loc)) enemies.getEnemy(i).startDying();
-            health--;
+        updateList = new ArrayList<Enemy>();
+        double lowXBound = loc.getX();
+        move();
+        double highXBound = loc.getX();
+        if(highXBound < lowXBound) {
+            double x = lowXBound;
+            lowXBound = highXBound;
+            highXBound = x;
 
         }
-        move();
+        double yInt = -(slope * loc.getX()) + loc.getY();
+        for(int i = 0; i < enemies.getListSize(); i++) {
+            if(enemies.getEnemy(i).containsLineSegment(slope, yInt, lowXBound, highXBound)) updateList.add(enemies.getEnemy(i));
+
+        }
         setBounds();
 
     }
