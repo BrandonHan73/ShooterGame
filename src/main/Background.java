@@ -42,13 +42,13 @@ public class Background extends JLabel {
 
     }
 
-    public int getWindowWidth() {
+    public int getIconWidth() {
         int retVal = iconWidth;
         return retVal;
 
     }
 
-    public int getWindowHeight() {
+    public int getIconHeight() {
         int retVal = iconHeight;
         return retVal;
 
