@@ -1,6 +1,8 @@
 package main;
 
-public class Game {
+import javax.swing.*;
+
+public class Game extends JLabel {
 
     private int windowWidth, windowHeight;
 
@@ -15,14 +17,22 @@ public class Game {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
 
-        background = new Background();
-        player = new Player();
+        setBounds(0, 0, windowWidth, windowHeight);
+
+        background = new Background("src/images/background.png", windowWidth, windowHeight);
+        player = new Player(new Coords(100, 100));
         enemies = new Enemy();
+
+        add(background);
+        add(player);
+        add(enemies);
 
     }
 
     public void update() {
-        background.update();
+        Coords playerLoc = player.getLoc();
+
+        background.update(playerLoc);
         player.update();
         enemies.update();
 

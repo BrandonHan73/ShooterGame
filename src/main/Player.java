@@ -1,14 +1,16 @@
 package main;
 
-public class Player {
+import javax.swing.*;
+
+public class Player extends JLabel {
 
     private Coords coords;
 
     private BulletZone bulletZone;
     private BulletZone deathZone;
 
-    public Player() {
-        coords = new Coords();
+    public Player(Coords loc) {
+        coords = new Coords(loc.getX(), loc.getY());
         bulletZone = new BulletZone();
         deathZone = new BulletZone();
 
@@ -21,5 +23,11 @@ public class Player {
     private void move() {}
 
     private void setBounds() {}
+
+    public Coords getLoc() {
+        Coords retVal = new Coords(coords.getX(), coords.getY());
+        return retVal;
+
+    }
 
 }

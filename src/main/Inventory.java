@@ -1,6 +1,8 @@
 package main;
 
-public class Inventory {
+import javax.swing.*;
+
+public class Inventory extends JLabel {
 
     public Inventory() {}
 

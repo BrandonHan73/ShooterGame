@@ -1,6 +1,8 @@
 package main;
 
-public class Enemy {
+import javax.swing.*;
+
+public class Enemy extends JLabel {
 
     private BulletZone bulletZone;
     private BulletZone deathZone;

@@ -26,8 +26,13 @@ public class Main {
         mainFrame.setLayout(null);
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        // Set up game
+        // Set up variables
         mainGame = new Game(windowWidth, windowHeight);
+        mainInventory = new Inventory();
+
+        // Add to frame
+        mainFrame.add(mainGame);
+        mainFrame.add(mainInventory);
 
         mainFrame.setVisible(true);
 
