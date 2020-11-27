@@ -35,7 +35,10 @@ public class Mouse {
         };
 
         mouseMotionListener = new MouseMotionListener() {
-            public void mouseDragged(MouseEvent e) {}
+            public void mouseDragged(MouseEvent e) {
+                coords.setXY(e.getX(), e.getY());
+
+            }
 
             public void mouseMoved(MouseEvent e) {
                 coords.setXY(e.getX(), e.getY());

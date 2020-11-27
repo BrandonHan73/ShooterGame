@@ -66,6 +66,12 @@ public class Bullet extends JLabel {
 
     }
 
+    public Coords getLoc() {
+        Coords retVal = new Coords(loc.getX(), loc.getY());
+        return retVal;
+
+    }
+
     private void setBounds() {
         setBounds((int)loc.getX() - (bulletWidth / 2), (int)loc.getY() - (bulletHeight / 2), bulletWidth, bulletHeight);
 

@@ -10,7 +10,12 @@ public class BulletList extends JLabel {
     private int cooldown = 100;
     private long fireTime;
 
+    private int bkgWidth, bkgHeight;
+
     public BulletList(int bkgWidth, int bkgHeight) {
+        this.bkgWidth = bkgWidth;
+        this.bkgHeight = bkgHeight;
+
         mainList = new ArrayList<Bullet>();
         fireTime = System.currentTimeMillis() - cooldown;
         setBounds(0, 0, bkgWidth, bkgHeight);
@@ -19,7 +24,17 @@ public class BulletList extends JLabel {
 
     public void update(Coords playerLoc, int piercePower, int speed, EnemyList enemies) {
         if(Mouse.getM1()) createBullet(piercePower, playerLoc, speed);
-        for(int i = 0; i < mainList.size(); i++) mainList.get(i).update(enemies);
+        for(int i = mainList.size(); i >= 0; i--) {
+            if(i == mainList.size()) continue;
+            mainList.get(i).update(enemies);
+            if(mainList.get(i).getLoc().getX() < 0 || mainList.get(i).getX() > bkgWidth || mainList.get(i).getLoc().getY() < 0 || mainList.get(i).getY() > bkgHeight) {
+                System.out.println("removing bullet");
+                remove(mainList.get(i));
+                mainList.remove(i);
+
+            }
+
+        }
 
     }
 
