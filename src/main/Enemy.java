@@ -6,6 +6,8 @@ import java.util.Random;
 public class Enemy extends JLabel {
 
     private final static int speed = 5;
+    public final static int hitboxWidth = 250;
+    public final static int hitboxHeight = 500;
 
     private int health;
 
@@ -51,7 +53,6 @@ public class Enemy extends JLabel {
         updateState(playerLoc);
         setBounds(playerLoc);
 
-        health--;
         switch(state) {
             case IDLE: jl.setText("idle"); break;
             case REALIZING: jl.setText("realizing"); break;
@@ -64,15 +65,24 @@ public class Enemy extends JLabel {
     }
 
     private void updateState(Coords playerLoc) {
-        if(coords.distanceFrom(playerLoc) < 100) state = State.ATTACKING;
+        if(state != State.DYING && coords.distanceFrom(playerLoc) < 100) state = State.ATTACKING;
         if(health <= 0 && state != State.DYING && state != State.DEAD) startDying();
         if(state == State.DYING && Math.abs(dyingTimer - System.currentTimeMillis()) > 2500) state = State.DEAD;
 
     }
 
-    private void startDying() {
-        state = State.DYING;
-        dyingTimer = System.currentTimeMillis();
+    public void startDying() {
+        if(state != State.DYING) {
+            state = State.DYING;
+            dyingTimer = System.currentTimeMillis();
+
+        }
+
+    }
+
+    public Coords getLoc() {
+        Coords retVal = new Coords(coords.getX(), coords.getY());
+        return retVal;
 
     }
 
@@ -88,6 +98,19 @@ public class Enemy extends JLabel {
         setBounds(x - 100, y - 100, 200, 2000);
         shadow.setBounds(0, 100, shadowWidth, shadowHeight);
         jl.setBounds(0, 0, 200, 100);
+
+    }
+
+    public boolean contains(Coords point) {
+        boolean retVal = false;
+        if(point.getX() > coords.getX() - (hitboxWidth / 2) && point.getX() < coords.getX() + (hitboxWidth / 2)) {
+            if(point.getY() < coords.getY() && point.getY() > coords.getY() - hitboxHeight) {
+                retVal = true;
+
+            }
+
+        }
+        return retVal;
 
     }
 

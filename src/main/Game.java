@@ -33,7 +33,7 @@ public class Game extends JLabel {
 
         playerCoords = player.getLoc();
 
-        background.update(playerCoords);
+        background.update(playerCoords, enemies);
         enemies.update(playerCoords);
 
     }

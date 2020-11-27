@@ -63,4 +63,14 @@ public class EnemyList extends JLabel {
 
     }
 
+    public int getListSize() {
+        return mainList.size();
+
+    }
+
+    public Enemy getEnemy(int index) {
+        return mainList.get(index);
+
+    }
+
 }
