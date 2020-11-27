@@ -11,7 +11,7 @@ public class Game extends JLabel {
 
     private Background background;
     private Player player;
-    private Enemy enemies;
+    private EnemyList enemies;
 
     public Game(int windowWidth, int windowHeight) {
         this.windowWidth = windowWidth;
@@ -21,11 +21,10 @@ public class Game extends JLabel {
 
         background = new Background("src/images/background.png", windowWidth, windowHeight);
         player = new Player("src/images/player", new Coords(100, 100), windowWidth, windowHeight);
-        enemies = new Enemy();
+        enemies = new EnemyList();
         Keyboard.init();
 
         add(player);
-        add(enemies);
         add(background);
 
     }
