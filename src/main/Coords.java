@@ -32,4 +32,9 @@ public class Coords {
 
     }
 
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+
+    }
+
 }

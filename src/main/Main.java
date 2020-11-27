@@ -33,6 +33,7 @@ public class Main {
         // Add to frame
         mainFrame.add(mainGame);
         mainFrame.add(mainInventory);
+        mainFrame.addKeyListener(Keyboard.getKeyListener());
 
         mainFrame.setVisible(true);
 

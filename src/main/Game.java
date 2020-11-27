@@ -27,15 +27,15 @@ public class Game extends JLabel {
         add(player);
         add(enemies);
         add(background);
-        addKeyListener(Keyboard.getKeyListener());
 
     }
 
     public void update() {
-        Coords playerLoc = player.getLoc();
-
-        background.update(playerLoc);
         player.update();
+
+        playerCoords = player.getLoc();
+
+        background.update(playerCoords);
         enemies.update();
 
     }
