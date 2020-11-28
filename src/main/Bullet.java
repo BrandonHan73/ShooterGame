@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Bullet extends JLabel {
 
     public static final int bulletWidth = 25, bulletHeight = 25;
+    public static final int verticalOffset = -60;
 
     private int health;
     private Coords loc, startLoc;
@@ -17,8 +18,8 @@ public class Bullet extends JLabel {
 
     public Bullet(int piercePower, Coords startLoc, int speed) {
         health = piercePower;
-        loc = new Coords(startLoc.getX(), startLoc.getY());
-        this.startLoc = new Coords(startLoc.getX(), startLoc.getY());
+        loc = new Coords(startLoc.getX(), startLoc.getY() + verticalOffset);
+        this.startLoc = new Coords(startLoc.getX(), startLoc.getY() + verticalOffset);
         vertical = false;
         this.speed = speed;
         this.slope = getSlope();
@@ -28,7 +29,7 @@ public class Bullet extends JLabel {
     }
 
     public void update(EnemyList enemies, Map obstacleMap) {
-        updateList = new ArrayList<Enemy>();
+        updateList = new ArrayList<>();
         boolean forceKill = false;
         double lowXBound = loc.getX();
         move();
@@ -92,7 +93,7 @@ public class Bullet extends JLabel {
     }
 
     private double getSlope() {
-        Coords c1 = new Coords(Main.windowWidth / 2, Main.windowHeight / 2);
+        Coords c1 = new Coords(Main.windowWidth / 2, (Main.windowHeight / 2) + verticalOffset);
         Coords c2 = new Coords(Mouse.getCoords().getX(), Mouse.getCoords().getY());
         double num = c1.getY() - c2.getY();
         double den = c1.getX() - c2.getX();

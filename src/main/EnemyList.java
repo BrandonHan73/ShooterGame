@@ -10,23 +10,18 @@ public class EnemyList extends JLabel {
 
     private int spawnRate;
     private long spawnTime;
-
-    private int frameWidth, frameHeight;
     private int bkgWidth, bkgHeight;
 
     private ArrayList<Enemy> mainList;
 
-    public EnemyList(int spawnRate, int frameWidth, int frameHeight, int bkgWidth, int bkgHeight) {
-        mainList = new ArrayList<Enemy>();
+    public EnemyList(int spawnRate, int bkgWidth, int bkgHeight) {
+        mainList = new ArrayList<>();
         random = new Random();
 
-        setBounds(0, 0, frameWidth, frameHeight);
+        setBounds(0, 0, Main.windowWidth, Main.windowHeight);
 
         this.spawnRate = spawnRate;
         spawnTime = System.currentTimeMillis();
-
-        this.frameWidth = frameWidth;
-        this.frameHeight = frameHeight;
 
         this.bkgWidth = bkgWidth;
         this.bkgHeight = bkgHeight;
@@ -43,7 +38,7 @@ public class EnemyList extends JLabel {
     private void spawn() {
         long currentTime = System.currentTimeMillis();
         if(currentTime > spawnTime + spawnRate) {
-            mainList.add(new Enemy(frameWidth, frameHeight, bkgWidth, bkgHeight, random));
+            mainList.add(new Enemy(bkgWidth, bkgHeight, random));
             add(mainList.get(mainList.size() - 1));
             spawnTime = System.currentTimeMillis();
 

@@ -27,7 +27,7 @@ public class Main {
         Mouse.init();
 
         // Set up variables
-        mainGame = new Game(windowWidth, windowHeight);
+        mainGame = new Game();
         mainInventory = new Inventory();
 
         // Add to frame

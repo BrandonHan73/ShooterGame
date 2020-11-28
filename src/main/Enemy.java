@@ -13,9 +13,7 @@ public class Enemy extends JLabel {
     private int health;
 
     private State state;
-    private long dyingTimer;
-
-    private int windowWidth, windowHeight;
+    private long timer;
 
     private static final ImageIcon shadowPNG = new ImageIcon("src/images/shadow.png");
     private static final int shadowWidth = shadowPNG.getIconWidth();
@@ -31,12 +29,9 @@ public class Enemy extends JLabel {
 
     }
 
-    public Enemy(int windowWidth, int frameHeight, int bkgWidth, int bkgHeight, Random random) {
+    public Enemy(int bkgWidth, int bkgHeight, Random random) {
 
         state = State.IDLE;
-
-        this.windowWidth = windowWidth;
-        this.windowHeight = frameHeight;
 
         health = 1000;
 
@@ -76,16 +71,28 @@ public class Enemy extends JLabel {
     }
 
     private void updateState(Coords playerLoc) {
-        if(state != State.DYING && coords.distanceFrom(playerLoc) < 100) state = State.ATTACKING;
-        if(health <= 0 && state != State.DYING && state != State.DEAD) startDying();
-        if(state == State.DYING && Math.abs(dyingTimer - System.currentTimeMillis()) > 2500) state = State.DEAD;
+        if(state != State.DYING) {
+            if(playerLoc.distanceFrom(coords) < (Main.windowHeight / 2) - 100) startRealizing();
+            if(System.currentTimeMillis() - timer > 1000 && state == State.REALIZING) state = State.ATTACKING;
+            if(health <= 0 && state != State.DYING && state != State.DEAD) startDying();
+
+        } else if(System.currentTimeMillis() - timer > 2500) state = State.DEAD;
+
+    }
+
+    private void startRealizing() {
+        if(state == State.IDLE) {
+            state = State.REALIZING;
+            timer = System.currentTimeMillis();
+
+        }
 
     }
 
     public void startDying() {
         if(state != State.DYING) {
             state = State.DYING;
-            dyingTimer = System.currentTimeMillis();
+            timer = System.currentTimeMillis();
 
         }
 
@@ -104,8 +111,8 @@ public class Enemy extends JLabel {
 
     private void setBounds(Coords playerLoc) {
         int x, y;
-        x = (windowWidth / 2) - (int) playerLoc.getX() + (int) coords.getX();
-        y = (windowHeight / 2) - (int) playerLoc.getY() + (int) coords.getY();
+        x = (Main.windowWidth / 2) - (int) playerLoc.getX() + (int) coords.getX();
+        y = (Main.windowHeight / 2) - (int) playerLoc.getY() + (int) coords.getY();
         setBounds(x - 100, y - 100, 200, 2000);
         shadow.setBounds((200 - shadowWidth) / 2, (200 - shadowHeight) / 2, shadowWidth, shadowHeight);
         jl.setBounds(0, 0, 200, 100);
@@ -144,10 +151,8 @@ public class Enemy extends JLabel {
         Coords upLeft = new Coords(coords.getX() - (hitboxWidth / 2), coords.getY() - hitboxHeight);
         Coords downRight = new Coords(coords.getX() + (hitboxWidth / 2), coords.getY());
         double wantedXStart, wantedXEnd;
-        if(lowXBound < upLeft.getX()) wantedXStart = upLeft.getX();
-        else wantedXStart = lowXBound;
-        if(highXBound > downRight.getX()) wantedXEnd = downRight.getX();
-        else wantedXEnd = highXBound;
+        wantedXStart = Math.max(upLeft.getX(), lowXBound);
+        wantedXEnd = Math.min(downRight.getX(), highXBound);
         if(lowXBound <= downRight.getX() && highXBound >= upLeft.getX()) {
             retVal = true;
             System.out.println("1. " + lowXBound + ", " + downRight.getX());
@@ -175,8 +180,7 @@ public class Enemy extends JLabel {
         contestant1 = new Coords(startX, (slope * startX) + yInt);
         contestant2 = new Coords(endX, (slope * endX) + yInt);
 
-        if(contestant1.distanceFrom(loc) < contestant2.distanceFrom(loc)) return contestant1.distanceFrom(loc);
-        else return contestant2.distanceFrom(loc);
+        return Math.min(contestant1.distanceFrom(loc), contestant2.distanceFrom(loc));
 
     }
 

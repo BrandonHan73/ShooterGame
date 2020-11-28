@@ -2,6 +2,9 @@ package main;
 
 import javax.swing.*;
 
+import static main.Main.windowHeight;
+import static main.Main.windowWidth;
+
 public class Player extends JLabel {
 
     private final double speed = 5;
@@ -28,7 +31,7 @@ public class Player extends JLabel {
 
     private Coords coords;
 
-    private int windowWidth, windowHeight;
+    private int health;
 
     public enum ArmState {
         IDLE, SHOOTING
@@ -40,10 +43,8 @@ public class Player extends JLabel {
 
     }
 
-    public Player(String imageDirectoryPath, Coords loc, int windowWidth, int windowHeight, int bkgWidth, int bkgHeight) {
+    public Player(String imageDirectoryPath, Coords loc, int bkgWidth, int bkgHeight) {
         this.imageDirectoryPath = imageDirectoryPath;
-        this.windowWidth = windowWidth;
-        this.windowHeight = windowHeight;
         this.bkgWidth = bkgWidth;
         this.bkgHeight = bkgHeight;
 
