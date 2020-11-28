@@ -17,6 +17,8 @@ public class Player extends JLabel {
     private final int shadowHeight = shadowPNG.getIconHeight();
     private JLabel shadow;
 
+    private int bkgWidth, bkgHeight;
+
     private boolean direction;
 
     private ArmState armState;
@@ -38,10 +40,12 @@ public class Player extends JLabel {
 
     }
 
-    public Player(String imageDirectoryPath, Coords loc, int windowWidth, int windowHeight) {
+    public Player(String imageDirectoryPath, Coords loc, int windowWidth, int windowHeight, int bkgWidth, int bkgHeight) {
         this.imageDirectoryPath = imageDirectoryPath;
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
+        this.bkgWidth = bkgWidth;
+        this.bkgHeight = bkgHeight;
 
         // Temporary
         upperText = new JLabel();
@@ -103,11 +107,9 @@ public class Player extends JLabel {
         boolean permission = true;
 
         for(int i = (int)coords.getX() - (shadowWidth / 2); i < coords.getX() + (shadowWidth / 2); i++) for(int j = (int)coords.getY() - (shadowHeight / 2); j < coords.getY() + (shadowHeight / 2); j++) {
-            if((0 <= i && i < windowWidth) && (0 <= j && j < windowHeight)) if(obstacleMap.getLoc(i, j)) {
-                permission = false;
-                break;
-
-            }
+            if((0 > i || i > bkgWidth) || (0 > j || j > bkgHeight)) permission = false;
+            if(!permission) break;
+            if(obstacleMap.getLoc(i, j)) permission = false;
 
         }
 

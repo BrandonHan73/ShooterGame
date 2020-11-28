@@ -20,7 +20,8 @@ public class Background extends JLabel {
         iconHeight = image.getIconHeight();
 
         obstacleMap = new Map(iconWidth, iconHeight);
-        obstacleMap.drawLine(new Coords(0, 0), new Coords(0, 1000), true);
+        obstacleMap.drawLine(new Coords(0, 1000), new Coords(3000, 1000), true);
+        obstacleMap.drawLine(new Coords(1000, 0), new Coords(1000, 3000), true);
 
         setBounds(new Coords(0, 0));
 
@@ -37,7 +38,7 @@ public class Background extends JLabel {
     public void update(Coords playerLoc, EnemyList enemies) {
         setBounds(playerLoc);
 
-        bullets.update(playerLoc, 1, 100, enemies);
+        bullets.update(playerLoc, 1, 50, enemies, obstacleMap);
 
 //        System.out.println("Updated background");
 

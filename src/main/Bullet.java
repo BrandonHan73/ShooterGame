@@ -9,9 +9,8 @@ public class Bullet extends JLabel {
 
     private int health;
     private Coords loc, startLoc;
-    private double slope;
+    private double slope, yInt;
     private boolean vertical;
-    private boolean isGoingLeft;
     private int speed;
 
     private ArrayList<Enemy> updateList;
@@ -23,11 +22,12 @@ public class Bullet extends JLabel {
         vertical = false;
         this.speed = speed;
         this.slope = getSlope();
+        yInt = -(slope * loc.getX()) + loc.getY();
         setIcon(new ImageIcon("D:/Pictures/FinishedProblems.png"));
 
     }
 
-    public void update(EnemyList enemies) {
+    public void update(EnemyList enemies, Map obstacleMap) {
         updateList = new ArrayList<Enemy>();
         double lowXBound = loc.getX();
         move();
@@ -38,18 +38,24 @@ public class Bullet extends JLabel {
             highXBound = x;
 
         }
-        double yInt = -(slope * loc.getX()) + loc.getY();
-        for(int i = 0; i < enemies.getListSize(); i++) {
-            if(enemies.getEnemy(i).containsLineSegment(slope, yInt, lowXBound, highXBound)) updateList.add(enemies.getEnemy(i));
+        if(!obstacleMap.containsLineSegment(slope, yInt, lowXBound, highXBound)) {
+            for (int i = 0; i < enemies.getListSize(); i++) {
+                if (enemies.getEnemy(i).containsLineSegment(slope, yInt, lowXBound, highXBound))
+                    updateList.add(enemies.getEnemy(i));
 
-        }
-        setBounds();
+            }
+            for (int i = 0; i < updateList.size(); i++) {
+                updateList.get(i).startDying();
+
+            }
+            setBounds();
+
+        } else health = 0;
 
     }
 
     public boolean isDead() {
-        if(health <= 0) return true;
-        else return false;
+        return health <= 0;
 
     }
 

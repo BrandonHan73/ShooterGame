@@ -22,12 +22,12 @@ public class BulletList extends JLabel {
 
     }
 
-    public void update(Coords playerLoc, int piercePower, int speed, EnemyList enemies) {
+    public void update(Coords playerLoc, int piercePower, int speed, EnemyList enemies, Map obstacleMap) {
         if(Mouse.getM1()) createBullet(piercePower, playerLoc, speed);
         for(int i = mainList.size(); i >= 0; i--) {
             if(i == mainList.size()) continue;
-            mainList.get(i).update(enemies);
-            if(mainList.get(i).getLoc().getX() < 0 || mainList.get(i).getX() > bkgWidth || mainList.get(i).getLoc().getY() < 0 || mainList.get(i).getY() > bkgHeight) {
+            mainList.get(i).update(enemies, obstacleMap);
+            if(mainList.get(i).getLoc().getX() < 0 || mainList.get(i).getX() > bkgWidth || mainList.get(i).getLoc().getY() < 0 || mainList.get(i).getY() > bkgHeight || mainList.get(i).isDead()) {
                 remove(mainList.get(i));
                 mainList.remove(i);
 

@@ -19,7 +19,7 @@ public class Game extends JLabel {
         setBounds(0, 0, windowWidth, windowHeight);
 
         background = new Background("src/images/background.png", windowWidth, windowHeight);
-        player = new Player("src/images/player", new Coords(1000, 100), windowWidth, windowHeight);
+        player = new Player("src/images/player", new Coords(100, 100), windowWidth, windowHeight, background.getIconWidth(), background.getIconHeight());
         enemies = new EnemyList(1000, windowWidth, windowHeight, background.getIconWidth(), background.getIconHeight());
 
         add(player);
