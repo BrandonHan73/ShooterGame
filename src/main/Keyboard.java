@@ -19,20 +19,39 @@ public class Keyboard {
         }
 
         keyListener = new KeyListener() {
-            public void keyTyped(KeyEvent e) {}
+            public void keyTyped(KeyEvent e) {
+            }
 
             public void keyPressed(KeyEvent e) {
                 char key = e.getKeyChar();
                 switch(key) {
-                    case 'w': keys[Keyboard.w] = true; break;
-                    case 'a': keys[Keyboard.a] = true; break;
-                    case 's': keys[Keyboard.s] = true; break;
-                    case 'd': keys[Keyboard.d] = true; break;
-                    case ' ': keys[Keyboard.space] = true; break;
-                    case 'e': keys[Keyboard.e] = true; break;
-                    case 'q': keys[Keyboard.q] = true; break;
-                    case 'r': keys[Keyboard.r] = true; break;
-                    case 'f': keys[Keyboard.f] = true; break;
+                    case 'w':
+                        keys[Keyboard.w] = true;
+                        break;
+                    case 'a':
+                        keys[Keyboard.a] = true;
+                        break;
+                    case 's':
+                        keys[Keyboard.s] = true;
+                        break;
+                    case 'd':
+                        keys[Keyboard.d] = true;
+                        break;
+                    case ' ':
+                        keys[Keyboard.space] = true;
+                        break;
+                    case 'e':
+                        keys[Keyboard.e] = true;
+                        break;
+                    case 'q':
+                        keys[Keyboard.q] = true;
+                        break;
+                    case 'r':
+                        keys[Keyboard.r] = true;
+                        break;
+                    case 'f':
+                        keys[Keyboard.f] = true;
+                        break;
 
                 }
 
@@ -41,15 +60,33 @@ public class Keyboard {
             public void keyReleased(KeyEvent e) {
                 char key = e.getKeyChar();
                 switch(key) {
-                    case 'w': keys[Keyboard.w] = false; break;
-                    case 'a': keys[Keyboard.a] = false; break;
-                    case 's': keys[Keyboard.s] = false; break;
-                    case 'd': keys[Keyboard.d] = false; break;
-                    case ' ': keys[Keyboard.space] = false; break;
-                    case 'e': keys[Keyboard.e] = false; break;
-                    case 'q': keys[Keyboard.q] = false; break;
-                    case 'r': keys[Keyboard.r] = false; break;
-                    case 'f': keys[Keyboard.f] = false; break;
+                    case 'w':
+                        keys[Keyboard.w] = false;
+                        break;
+                    case 'a':
+                        keys[Keyboard.a] = false;
+                        break;
+                    case 's':
+                        keys[Keyboard.s] = false;
+                        break;
+                    case 'd':
+                        keys[Keyboard.d] = false;
+                        break;
+                    case ' ':
+                        keys[Keyboard.space] = false;
+                        break;
+                    case 'e':
+                        keys[Keyboard.e] = false;
+                        break;
+                    case 'q':
+                        keys[Keyboard.q] = false;
+                        break;
+                    case 'r':
+                        keys[Keyboard.r] = false;
+                        break;
+                    case 'f':
+                        keys[Keyboard.f] = false;
+                        break;
 
                 }
 
@@ -69,6 +106,7 @@ public class Keyboard {
 
     }
 
-    private Keyboard() {}
+    private Keyboard() {
+    }
 
 }

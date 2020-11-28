@@ -65,8 +65,8 @@ public class Background extends JLabel {
 
     private void setBounds(Coords playerLoc) {
         int x, y;
-        x = (Main.windowWidth / 2) - (int)playerLoc.getX();
-        y = (Main.windowHeight / 2) - (int)playerLoc.getY();
+        x = (Main.windowWidth / 2) - (int) playerLoc.getX();
+        y = (Main.windowHeight / 2) - (int) playerLoc.getY();
         setBounds(x, y, iconWidth, iconHeight);
 
 //        System.out.println("Set background location to " + x + ", " + y);

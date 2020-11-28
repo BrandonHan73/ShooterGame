@@ -90,20 +90,30 @@ public class Player extends JLabel {
 
     }
 
-    public void takeDamage() {health--;}
+    public void takeDamage() {
+        health--;
+    }
 
     private void updateGraphics() {
         healthLabel.setBounds(20, 20, health * 10, 50);
 
         // Temporary
         switch(armState) {
-            case IDLE: upperText.setText("idle"); break;
-            case SHOOTING: upperText.setText("shooting"); break;
+            case IDLE:
+                upperText.setText("idle");
+                break;
+            case SHOOTING:
+                upperText.setText("shooting");
+                break;
 
         }
         switch(legState) {
-            case IDLE: lowerText.setText("idle"); break;
-            case MOVING: lowerText.setText("moving"); break;
+            case IDLE:
+                lowerText.setText("idle");
+                break;
+            case MOVING:
+                lowerText.setText("moving");
+                break;
 
         }
 
@@ -122,12 +132,13 @@ public class Player extends JLabel {
 
         boolean permission = true;
 
-        for(int i = (int)coords.getX() - (shadowWidth / 2); i < coords.getX() + (shadowWidth / 2); i++) for(int j = (int)coords.getY() - (shadowHeight / 2); j < coords.getY() + (shadowHeight / 2); j++) {
-            if((0 > i || i > bkgWidth) || (0 > j || j > bkgHeight)) permission = false;
-            if(!permission) break;
-            if(obstacleMap.getLoc(i, j)) permission = false;
+        for(int i = (int) coords.getX() - (shadowWidth / 2); i < coords.getX() + (shadowWidth / 2); i++)
+            for(int j = (int) coords.getY() - (shadowHeight / 2); j < coords.getY() + (shadowHeight / 2); j++) {
+                if((0 > i || i > bkgWidth) || (0 > j || j > bkgHeight)) permission = false;
+                if(!permission) break;
+                if(obstacleMap.getLoc(i, j)) permission = false;
 
-        }
+            }
 
         if(!permission) coords = new Coords(startPoint.getX(), startPoint.getY());
 
@@ -141,8 +152,14 @@ public class Player extends JLabel {
 
         double wantedDistance = speed;
 
-        if(w && s) {w = false; s = false;}
-        if(a && d) {a = false; d = false;}
+        if(w && s) {
+            w = false;
+            s = false;
+        }
+        if(a && d) {
+            a = false;
+            d = false;
+        }
 
         if((w || s) && (a || d)) wantedDistance /= rt2;
 
@@ -158,13 +175,15 @@ public class Player extends JLabel {
 
     public boolean shadowContains(Coords location) {
         boolean retVal = false;
-        if(coords.getX() - (shadowWidth / 2) < location.getX() && location.getX() < coords.getX() + (shadowWidth / 2)) retVal = true;
+        if(coords.getX() - (shadowWidth / 2) < location.getX() && location.getX() < coords.getX() + (shadowWidth / 2))
+            retVal = true;
         if(coords.getY() - shadowHeight < location.getY() && location.getY() < coords.getY()) retVal = true;
         return retVal;
 
     }
 
-    private void setBounds() {}
+    private void setBounds() {
+    }
 
     private void lookLeft() {
         direction = false;

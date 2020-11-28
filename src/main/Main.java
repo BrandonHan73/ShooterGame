@@ -45,7 +45,8 @@ public class Main {
             loopStartTime = System.currentTimeMillis();
             mainGame.update();
             mainInventory.update();
-            while(System.currentTimeMillis() - loopStartTime < 15) {}
+            while(System.currentTimeMillis() - loopStartTime < 15) {
+            }
 
         }
 

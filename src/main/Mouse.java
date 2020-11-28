@@ -16,7 +16,8 @@ public class Mouse {
         M1 = false;
 
         mouseListener = new MouseListener() {
-            public void mouseClicked(MouseEvent e) {}
+            public void mouseClicked(MouseEvent e) {
+            }
 
             public void mousePressed(MouseEvent e) {
                 M1 = true;
@@ -28,9 +29,11 @@ public class Mouse {
 
             }
 
-            public void mouseEntered(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {
+            }
 
-            public void mouseExited(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {
+            }
 
         };
 
@@ -71,6 +74,7 @@ public class Mouse {
 
     }
 
-    private Mouse() {}
+    private Mouse() {
+    }
 
 }

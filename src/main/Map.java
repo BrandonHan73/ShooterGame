@@ -38,7 +38,8 @@ public class Map {
             if(!vertical) slope = 1 / slope;
             for(int i = (int) start.getY(); i != (int) end.getY(); i += 0) {
                 if(i < 0) continue;
-                if(Math.abs(slope) == 1 && i + 1 != map[0].length) map[(int) (slope * (i - (int) start.getY()) + (int) start.getX())][i + 1] = value;
+                if(Math.abs(slope) == 1 && i + 1 != map[0].length)
+                    map[(int) (slope * (i - (int) start.getY()) + (int) start.getX())][i + 1] = value;
                 map[(int) (slope * (i - (int) start.getY()) + (int) start.getX())][i] = value;
                 if(start.getY() < end.getY()) i++;
                 else i--;
