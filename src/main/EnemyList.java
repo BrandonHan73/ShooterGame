@@ -28,17 +28,17 @@ public class EnemyList extends JLabel {
 
     }
 
-    public void update(Player player) {
-        spawn();
-        for(int i = 0; i < mainList.size(); i++) mainList.get(i).update(player);
+    public void update(Map obstacleMap, Player player) {
+        spawn(obstacleMap, player.getLoc());
+        for(int i = 0; i < mainList.size(); i++) mainList.get(i).update(player, obstacleMap);
         checkDeaths();
 
     }
 
-    private void spawn() {
+    private void spawn(Map obstacleMap, Coords playerLoc) {
         long currentTime = System.currentTimeMillis();
         if(currentTime > spawnTime + spawnRate) {
-            mainList.add(new Enemy(bkgWidth, bkgHeight, random));
+            mainList.add(new Enemy(obstacleMap, random, playerLoc));
             add(mainList.get(mainList.size() - 1));
             spawnTime = System.currentTimeMillis();
 

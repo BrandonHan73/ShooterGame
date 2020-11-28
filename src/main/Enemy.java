@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Enemy extends JLabel {
 
-    public final static int realizeTime = 1500, attackTime = 3000, dyingTime = 2500;
+    public final static int realizeTime = 1500, attackTime = 1000, dyingTime = 2500;
     public final static int realizeDistance = 800, attackDistance = 50;
     private final static int speed = 4;
     public final static int hitboxWidth = 87;
@@ -31,13 +31,24 @@ public class Enemy extends JLabel {
 
     }
 
-    public Enemy(int bkgWidth, int bkgHeight, Random random) {
-
-        state = State.IDLE;
+    public Enemy(Map obstacleMap, Random random, Coords playerLoc) {
 
         health = 1000;
 
-        coords = new Coords(random.nextInt(bkgWidth), random.nextInt(bkgHeight));
+        while(true) {
+            coords = new Coords(random.nextInt(obstacleMap.getWidth()), random.nextInt(obstacleMap.getHeight()));
+            if(coords.distanceFrom(playerLoc) < Math.sqrt(Math.pow(Main.windowWidth, 2) + Math.pow(Main.windowHeight, 2)))
+                continue;
+            for(int x = (int) coords.getX() - (shadowWidth / 2); x <= (int) coords.getX() + (shadowWidth / 2); x++) {
+                for(int y = (int) coords.getY() - shadowHeight; y <= (int) coords.getY() + (shadowWidth / 2); y++) {
+                    if(obstacleMap.getLoc(x, y)) continue;
+
+                }
+
+            }
+            break;
+
+        }
 
         jl = new JLabel();
         add(jl);
@@ -45,13 +56,16 @@ public class Enemy extends JLabel {
         shadow = new JLabel(shadowPNG);
         add(shadow);
 
+        state = State.IDLE;
+        if(random.nextInt(10) != 0) startRealizing(playerLoc);
+
     }
 
-    public void update(Player player) {
+    public void update(Player player, Map obstacleMap) {
         Coords playerLoc = player.getLoc();
         updateState(player);
         setBounds(playerLoc);
-        move(playerLoc);
+        safeMove(playerLoc, obstacleMap);
 
         switch(state) {
             case IDLE:
@@ -80,7 +94,7 @@ public class Enemy extends JLabel {
     private void updateState(Player player) {
         Coords playerLoc = player.getLoc();
         if(state != State.DYING) {
-            startRealizing(playerLoc);
+            if(state == State.IDLE && playerLoc.distanceFrom(coords) <= realizeDistance) startRealizing(playerLoc);
             startCharging(playerLoc);
             attack(player);
             if(health <= 0 && state != State.DYING && state != State.DEAD) startDying();
@@ -111,12 +125,23 @@ public class Enemy extends JLabel {
 
     }
 
-    private void startRealizing(Coords playerLoc) {
-        if(state == State.IDLE && playerLoc.distanceFrom(coords) <= realizeDistance) {
-            state = State.REALIZING;
-            timer = System.currentTimeMillis();
+    private void safeMove(Coords playerLoc, Map obstacleMap) {
+        Coords startPoint = new Coords(coords.getX(), coords.getY());
 
-        }
+        move(playerLoc);
+
+        for(int i = (int) coords.getX() - (shadowWidth / 2); i < coords.getX() + (shadowWidth / 2); i++)
+            for(int j = (int) coords.getY() - (shadowHeight / 2); j < coords.getY() + (shadowHeight / 2); j++) {
+                if(obstacleMap.getLoc(i, j)) coords = new Coords(startPoint.getX(), startPoint.getY());
+                break;
+
+            }
+
+    }
+
+    private void startRealizing(Coords playerLoc) {
+        state = State.REALIZING;
+        timer = System.currentTimeMillis();
 
     }
 

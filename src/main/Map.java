@@ -50,6 +50,16 @@ public class Map {
 
     }
 
+    public int getWidth() {
+        return map.length;
+
+    }
+
+    public int getHeight() {
+        return map[0].length;
+
+    }
+
     public boolean getLoc(int x, int y) {
         int safeX = x, safeY = y;
         if(x < 0) safeX = 0;

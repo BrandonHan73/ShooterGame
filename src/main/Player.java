@@ -15,6 +15,8 @@ public class Player extends JLabel {
 
     private final double rt2 = Math.sqrt(2);
 
+    private final int startHealth = 100;
+
     private final ImageIcon shadowPNG = new ImageIcon("src/images/shadow.png");
     private final int shadowWidth = shadowPNG.getIconWidth();
     private final int shadowHeight = shadowPNG.getIconHeight();
@@ -32,6 +34,10 @@ public class Player extends JLabel {
     private Coords coords;
 
     private int health;
+    private final ImageIcon healthPNG = new ImageIcon("src/images/health.png");
+    private final ImageIcon healthBkgPNG = new ImageIcon("src/images/healthBarBackground.png");
+    private JLabel healthLabel;
+    private JLabel healthBkg;
 
     public enum ArmState {
         IDLE, SHOOTING
@@ -47,6 +53,13 @@ public class Player extends JLabel {
         this.imageDirectoryPath = imageDirectoryPath;
         this.bkgWidth = bkgWidth;
         this.bkgHeight = bkgHeight;
+
+        health = startHealth;
+        healthLabel = new JLabel(healthPNG);
+        healthBkg = new JLabel(healthBkgPNG);
+        add(healthLabel);
+        add(healthBkg);
+        healthBkg.setBounds(10, 10, healthBkgPNG.getIconWidth(), healthBkgPNG.getIconHeight());
 
         // Temporary
         upperText = new JLabel();
@@ -77,9 +90,11 @@ public class Player extends JLabel {
 
     }
 
-    public void takeDamage() {}
+    public void takeDamage() {health--;}
 
     private void updateGraphics() {
+        healthLabel.setBounds(20, 20, health * 10, 50);
+
         // Temporary
         switch(armState) {
             case IDLE: upperText.setText("idle"); break;
