@@ -1,6 +1,7 @@
 package main;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Game extends JLabel {
 
@@ -30,7 +31,7 @@ public class Game extends JLabel {
         playerCoords = player.getLoc();
 
         background.update(playerCoords, enemies);
-        enemies.update(playerCoords);
+        enemies.update(player);
 
     }
 

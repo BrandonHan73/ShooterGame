@@ -28,9 +28,9 @@ public class EnemyList extends JLabel {
 
     }
 
-    public void update(Coords playerLoc) {
+    public void update(Player player) {
         spawn();
-        for(int i = 0; i < mainList.size(); i++) mainList.get(i).update(playerLoc);
+        for(int i = 0; i < mainList.size(); i++) mainList.get(i).update(player);
         checkDeaths();
 
     }

@@ -6,7 +6,9 @@ import java.util.Random;
 
 public class Enemy extends JLabel {
 
-    private final static int speed = 5;
+    public final static int realizeTime = 1500, attackTime = 3000, dyingTime = 2500;
+    public final static int realizeDistance = 800, attackDistance = 50;
+    private final static int speed = 4;
     public final static int hitboxWidth = 87;
     public final static int hitboxHeight = 120;
 
@@ -25,7 +27,7 @@ public class Enemy extends JLabel {
     private Coords coords;
 
     public enum State {
-        IDLE, REALIZING, ATTACKING, DYING, DEAD
+        IDLE, REALIZING, CHARGING, ATTACKING, DYING, DEAD
 
     }
 
@@ -45,9 +47,11 @@ public class Enemy extends JLabel {
 
     }
 
-    public void update(Coords playerLoc) {
-        updateState(playerLoc);
+    public void update(Player player) {
+        Coords playerLoc = player.getLoc();
+        updateState(player);
         setBounds(playerLoc);
+        move(playerLoc);
 
         switch(state) {
             case IDLE:
@@ -55,6 +59,9 @@ public class Enemy extends JLabel {
                 break;
             case REALIZING:
                 jl.setText("realizing");
+                break;
+            case CHARGING:
+                jl.setText("charging");
                 break;
             case ATTACKING:
                 jl.setText("attacking");
@@ -70,19 +77,65 @@ public class Enemy extends JLabel {
 
     }
 
-    private void updateState(Coords playerLoc) {
+    private void updateState(Player player) {
+        Coords playerLoc = player.getLoc();
         if(state != State.DYING) {
-            if(playerLoc.distanceFrom(coords) < (Main.windowHeight / 2) - 100) startRealizing();
-            if(System.currentTimeMillis() - timer > 1000 && state == State.REALIZING) state = State.ATTACKING;
+            startRealizing(playerLoc);
+            startCharging(playerLoc);
+            attack(player);
             if(health <= 0 && state != State.DYING && state != State.DEAD) startDying();
 
-        } else if(System.currentTimeMillis() - timer > 2500) state = State.DEAD;
+        } else if(System.currentTimeMillis() - timer > dyingTime) state = State.DEAD;
 
     }
 
-    private void startRealizing() {
-        if(state == State.IDLE) {
+    private void move(Coords playerLoc) {
+        if(state == State.CHARGING && playerLoc.distanceFrom(coords) > attackDistance) {
+            double xDiff, yDiff;
+            if(playerLoc.getX() == coords.getX()) {
+                xDiff = 0;
+                if(playerLoc.getY() > coords.getY()) yDiff = speed;
+                else yDiff = -speed;
+
+            } else {
+                double slope = (playerLoc.getY() - coords.getY()) / (playerLoc.getX() - coords.getX());
+                xDiff = speed / Math.sqrt(Math.pow(slope, 2) + 1);
+                if(playerLoc.getX() < coords.getX()) xDiff = -xDiff;
+                yDiff = slope * xDiff;
+
+            }
+            coords.moveX(xDiff);
+            coords.moveY(yDiff);
+
+        }
+
+    }
+
+    private void startRealizing(Coords playerLoc) {
+        if(state == State.IDLE && playerLoc.distanceFrom(coords) <= realizeDistance) {
             state = State.REALIZING;
+            timer = System.currentTimeMillis();
+
+        }
+
+    }
+
+    private void startCharging(Coords playerLoc) {
+        if((state == State.REALIZING && System.currentTimeMillis() - timer > realizeTime) || (state == State.ATTACKING && playerLoc.distanceFrom(coords) > attackDistance)) {
+            state = State.CHARGING;
+
+        }
+
+    }
+
+    private void attack(Player player) {
+        if(state == State.CHARGING && player.getLoc().distanceFrom(coords) <= attackDistance) {
+            state = State.ATTACKING;
+            player.takeDamage();
+            timer = System.currentTimeMillis();
+
+        } else if(state == State.ATTACKING && System.currentTimeMillis() - timer > attackTime) {
+            player.takeDamage();
             timer = System.currentTimeMillis();
 
         }
@@ -155,8 +208,6 @@ public class Enemy extends JLabel {
         wantedXEnd = Math.min(downRight.getX(), highXBound);
         if(lowXBound <= downRight.getX() && highXBound >= upLeft.getX()) {
             retVal = true;
-            System.out.println("1. " + lowXBound + ", " + downRight.getX());
-            System.out.println("2. " + highXBound + ", " + upLeft.getX());
             double enterLoc = (slope * wantedXStart) + yInt;
             double exitLoc = (slope * wantedXEnd) + yInt;
             if((enterLoc < upLeft.getY() && exitLoc < upLeft.getY()) || (enterLoc > downRight.getY() && exitLoc > downRight.getY())) {

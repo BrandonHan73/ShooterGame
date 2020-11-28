@@ -77,7 +77,7 @@ public class Player extends JLabel {
 
     }
 
-    private void takeDamage() {}
+    public void takeDamage() {}
 
     private void updateGraphics() {
         // Temporary
