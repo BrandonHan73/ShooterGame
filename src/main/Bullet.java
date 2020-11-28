@@ -38,19 +38,28 @@ public class Bullet extends JLabel {
             highXBound = x;
 
         }
-        if(!obstacleMap.containsLineSegment(slope, yInt, lowXBound, highXBound)) {
-            for (int i = 0; i < enemies.getListSize(); i++) {
-                if (enemies.getEnemy(i).containsLineSegment(slope, yInt, lowXBound, highXBound))
-                    updateList.add(enemies.getEnemy(i));
+        for(int i = 0; i < enemies.getListSize(); i++) {
+            if(enemies.getEnemy(i).containsLineSegment(slope, yInt, lowXBound, highXBound))
+                updateList.add(enemies.getEnemy(i));
+
+        }
+
+        Coords[] obstacleIntersections = obstacleMap.getLineSegmentIntersections(slope, yInt, lowXBound, highXBound);
+        if(obstacleIntersections.length != 0) {
+            Coords wantedIntersection = obstacleIntersections[0];
+            for(Coords x : obstacleIntersections) {
+                if(startLoc.distanceFrom(x) < startLoc.distanceFrom(wantedIntersection)) wantedIntersection = new Coords(x.getX(), x.getY());
 
             }
-            for (int i = 0; i < updateList.size(); i++) {
-                updateList.get(i).startDying();
+            for(int i = updateList.size() - 1; i >= 0; i--) {
+                if(startLoc.distanceFrom(updateList.get(i).getLoc()) > startLoc.distanceFrom(wantedIntersection)) updateList.remove(i);
 
             }
-            setBounds();
+            health = 0;
 
-        } else health = 0;
+        } else setBounds();
+
+        for(int i = 0; i < updateList.size(); i++) updateList.get(i).startDying();
 
     }
 
@@ -88,7 +97,7 @@ public class Bullet extends JLabel {
     }
 
     private void setBounds() {
-        setBounds((int)loc.getX() - (bulletWidth / 2), (int)loc.getY() - (bulletHeight / 2), bulletWidth, bulletHeight);
+        setBounds((int) loc.getX() - (bulletWidth / 2), (int) loc.getY() - (bulletHeight / 2), bulletWidth, bulletHeight);
 
     }
 

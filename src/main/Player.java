@@ -140,6 +140,14 @@ public class Player extends JLabel {
 
     }
 
+    public boolean shadowContains(Coords location) {
+        boolean retVal = false;
+        if(coords.getX() - (shadowWidth / 2) < location.getX() && location.getX() < coords.getX() + (shadowWidth / 2)) retVal = true;
+        if(coords.getY() - shadowHeight < location.getY() && location.getY() < coords.getY()) retVal = true;
+        return retVal;
+
+    }
+
     private void setBounds() {}
 
     private void lookLeft() {

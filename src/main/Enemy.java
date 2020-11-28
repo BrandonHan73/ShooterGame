@@ -1,13 +1,14 @@
 package main;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Enemy extends JLabel {
 
     private final static int speed = 5;
-    public final static int hitboxWidth = 250;
-    public final static int hitboxHeight = 500;
+    public final static int hitboxWidth = 87;
+    public final static int hitboxHeight = 120;
 
     private int health;
 
@@ -96,8 +97,16 @@ public class Enemy extends JLabel {
         x = (windowWidth / 2) - (int)playerLoc.getX() + (int)coords.getX();
         y = (windowHeight / 2) - (int)playerLoc.getY() + (int)coords.getY();
         setBounds(x - 100, y - 100, 200, 2000);
-        shadow.setBounds(0, 100, shadowWidth, shadowHeight);
+        shadow.setBounds((200 - shadowWidth) / 2, (200 - shadowHeight) / 2, shadowWidth, shadowHeight);
         jl.setBounds(0, 0, 200, 100);
+
+    }
+
+    public boolean shadowContains(Coords location) {
+        boolean retVal = false;
+        if(coords.getX() - (shadowWidth / 2) < location.getX() && location.getX() < coords.getX() + (shadowWidth / 2)) retVal = true;
+        if(coords.getY() - shadowHeight < location.getY() && location.getY() < coords.getY()) retVal = true;
+        return retVal;
 
     }
 
@@ -129,6 +138,11 @@ public class Enemy extends JLabel {
 
         }
         return retVal;
+
+    }
+
+    public Coords closestIntersectionToLineSegment(double slope, double yInt, double lowXBound, double highXBound, Coords loc) {
+        double startX, endX;
 
     }
 

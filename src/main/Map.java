@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 public class Map {
 
     private boolean[][] map;
@@ -23,10 +25,10 @@ public class Map {
 
         }
 
-        if(slope < 1 && !vertical) {
-            for(int i = (int)start.getX(); i != (int)end.getX(); i += 0) {
+        if(Math.abs(slope) < 1 && !vertical) {
+            for(int i = (int) start.getX(); i != (int) end.getX(); i += 0) {
                 if(i < 0) continue;
-                map[i][(int)(slope * (i - (int)start.getX()) + (int)start.getY())] = value;
+                map[i][(int) (slope * (i - (int) start.getX()) + (int) start.getY())] = value;
                 if(start.getX() < end.getX()) i++;
                 else i--;
 
@@ -34,16 +36,17 @@ public class Map {
 
         } else {
             if(!vertical) slope = 1 / slope;
-            for(int i = (int)start.getY(); i != (int)end.getY(); i += 0) {
+            for(int i = (int) start.getY(); i != (int) end.getY(); i += 0) {
                 if(i < 0) continue;
-                map[(int)(slope * (i - (int)start.getY()) + (int)start.getX())][i] = value;
+                if(Math.abs(slope) == 1 && i + 1 != map[0].length) map[(int) (slope * (i - (int) start.getY()) + (int) start.getX())][i + 1] = value;
+                map[(int) (slope * (i - (int) start.getY()) + (int) start.getX())][i] = value;
                 if(start.getY() < end.getY()) i++;
                 else i--;
 
             }
 
         }
-        map[(int)end.getX()][(int)end.getY()] = value;
+        map[(int) end.getX()][(int) end.getY()] = value;
 
     }
 
@@ -60,12 +63,13 @@ public class Map {
 
     public boolean containsLineSegment(double slope, double yInt, double lowXBound, double highXBound) {
         boolean retVal = false;
-        if(Math.abs(slope) < 1) for (double i = lowXBound; i <= highXBound; i += 1) {
+        if(Math.abs(slope) < 1) for(double i = lowXBound; i <= highXBound; i += 1) {
             double y = (slope * i) + yInt;
-            if ((i < 0 || i > map.length - 1) || (y < 0 || y > map[0].length - 1)) continue;
-            if (map[(int) i][(int) y]) retVal = true;
+            if((i < 0 || i > map.length - 1) || (y < 0 || y > map[0].length - 1)) continue;
+            if(map[(int) i][(int) y]) retVal = true;
 
-        } else {
+        }
+        else {
             double startY = (slope * lowXBound) + yInt;
             double endY = (slope * highXBound) + yInt;
             if(startY > endY) {
@@ -76,13 +80,47 @@ public class Map {
             }
             for(double y = startY; y <= endY; y += 1) {
                 double x = (y - yInt) / slope;
-                if ((x < 0 || x > map.length - 1) || (y < 0 || y > map[0].length - 1)) continue;
-                if (map[(int) x][(int) y]) retVal = true;
+                if((x < 0 || x > map.length - 1) || (y < 0 || y > map[0].length - 1)) continue;
+                if(map[(int) x][(int) y]) retVal = true;
 
             }
 
         }
         return retVal;
+
+    }
+
+    public Coords[] getLineSegmentIntersections(double slope, double yInt, double lowXBound, double highXBound) {
+        ArrayList<Coords> retVal = new ArrayList<Coords>();
+        if(Math.abs(slope) < 1) for(double x = lowXBound; x <= highXBound; x += 1) {
+            double y = (slope * x) + yInt;
+            if((x < 0 || x > map.length - 1) || (y < 0 || y > map[0].length - 1)) continue;
+            if(map[(int) x][(int) y]) retVal.add(new Coords((int) x, (int) y));
+
+        }
+        else {
+            double startY = (slope * lowXBound) + yInt;
+            double endY = (slope * highXBound) + yInt;
+            if(startY > endY) {
+                double temp = startY;
+                startY = endY;
+                endY = temp;
+
+            }
+            for(double y = startY; y <= endY; y += 1) {
+                double x = (y - yInt) / slope;
+                if((x < 0 || x > map.length - 1) || (y < 0 || y > map[0].length - 1)) continue;
+                if(map[(int) x][(int) y]) retVal.add(0, new Coords((int) x, (int) y));
+
+            }
+
+        }
+        Coords[] retArray = new Coords[retVal.size()];
+        if(retArray.length != 0) for(int i = 0; i < retArray.length; i++) {
+            retArray[i] = retVal.get(i);
+
+        }
+        return retArray;
 
     }
 
