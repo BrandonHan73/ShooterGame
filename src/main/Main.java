@@ -31,8 +31,8 @@ public class Main {
         mainInventory = new Inventory();
 
         // Add to frame
-        mainFrame.add(mainGame);
         mainFrame.add(mainInventory);
+        mainFrame.add(mainGame);
         mainFrame.addKeyListener(Keyboard.getKeyListener());
         mainFrame.addMouseListener(Mouse.getMouseListener());
         mainFrame.addMouseMotionListener(Mouse.getMouseMotionListener());
