@@ -55,11 +55,21 @@ public class Enemy extends JLabel {
         setBounds(playerLoc);
 
         switch(state) {
-            case IDLE: jl.setText("idle"); break;
-            case REALIZING: jl.setText("realizing"); break;
-            case ATTACKING: jl.setText("attacking"); break;
-            case DYING: jl.setText("dying"); break;
-            case DEAD: jl.setText("dead"); break;
+            case IDLE:
+                jl.setText("idle");
+                break;
+            case REALIZING:
+                jl.setText("realizing");
+                break;
+            case ATTACKING:
+                jl.setText("attacking");
+                break;
+            case DYING:
+                jl.setText("dying");
+                break;
+            case DEAD:
+                jl.setText("dead");
+                break;
 
         }
 
@@ -94,8 +104,8 @@ public class Enemy extends JLabel {
 
     private void setBounds(Coords playerLoc) {
         int x, y;
-        x = (windowWidth / 2) - (int)playerLoc.getX() + (int)coords.getX();
-        y = (windowHeight / 2) - (int)playerLoc.getY() + (int)coords.getY();
+        x = (windowWidth / 2) - (int) playerLoc.getX() + (int) coords.getX();
+        y = (windowHeight / 2) - (int) playerLoc.getY() + (int) coords.getY();
         setBounds(x - 100, y - 100, 200, 2000);
         shadow.setBounds((200 - shadowWidth) / 2, (200 - shadowHeight) / 2, shadowWidth, shadowHeight);
         jl.setBounds(0, 0, 200, 100);
@@ -104,7 +114,8 @@ public class Enemy extends JLabel {
 
     public boolean shadowContains(Coords location) {
         boolean retVal = false;
-        if(coords.getX() - (shadowWidth / 2) < location.getX() && location.getX() < coords.getX() + (shadowWidth / 2)) retVal = true;
+        if(coords.getX() - (shadowWidth / 2) < location.getX() && location.getX() < coords.getX() + (shadowWidth / 2))
+            retVal = true;
         if(coords.getY() - shadowHeight < location.getY() && location.getY() < coords.getY()) retVal = true;
         return retVal;
 
@@ -123,14 +134,26 @@ public class Enemy extends JLabel {
 
     }
 
+    public State getState() {
+        return state;
+
+    }
+
     public boolean containsLineSegment(double slope, double yInt, double lowXBound, double highXBound) {
         boolean retVal = false;
         Coords upLeft = new Coords(coords.getX() - (hitboxWidth / 2), coords.getY() - hitboxHeight);
         Coords downRight = new Coords(coords.getX() + (hitboxWidth / 2), coords.getY());
+        double wantedXStart, wantedXEnd;
+        if(lowXBound < upLeft.getX()) wantedXStart = upLeft.getX();
+        else wantedXStart = lowXBound;
+        if(highXBound > downRight.getX()) wantedXEnd = downRight.getX();
+        else wantedXEnd = highXBound;
         if(lowXBound <= downRight.getX() && highXBound >= upLeft.getX()) {
             retVal = true;
-            double enterLoc = (slope * upLeft.getX()) + yInt;
-            double exitLoc = (slope * downRight.getX()) + yInt;
+            System.out.println("1. " + lowXBound + ", " + downRight.getX());
+            System.out.println("2. " + highXBound + ", " + upLeft.getX());
+            double enterLoc = (slope * wantedXStart) + yInt;
+            double exitLoc = (slope * wantedXEnd) + yInt;
             if((enterLoc < upLeft.getY() && exitLoc < upLeft.getY()) || (enterLoc > downRight.getY() && exitLoc > downRight.getY())) {
                 retVal = false;
 
@@ -141,8 +164,19 @@ public class Enemy extends JLabel {
 
     }
 
-    public Coords closestIntersectionToLineSegment(double slope, double yInt, double lowXBound, double highXBound, Coords loc) {
+    public double distanceToLocationFromSelectSegment(double slope, double yInt, double lowXBound, double highXBound, Coords loc) {
         double startX, endX;
+        if(coords.getX() - (hitboxWidth / 2) < lowXBound) startX = lowXBound;
+        else startX = loc.getX();
+        if(coords.getX() + (hitboxWidth / 2) < highXBound) endX = loc.getX();
+        else endX = highXBound;
+
+        Coords contestant1, contestant2;
+        contestant1 = new Coords(startX, (slope * startX) + yInt);
+        contestant2 = new Coords(endX, (slope * endX) + yInt);
+
+        if(contestant1.distanceFrom(loc) < contestant2.distanceFrom(loc)) return contestant1.distanceFrom(loc);
+        else return contestant2.distanceFrom(loc);
 
     }
 

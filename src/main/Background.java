@@ -40,7 +40,7 @@ public class Background extends JLabel {
     public void update(Coords playerLoc, EnemyList enemies) {
         setBounds(playerLoc);
 
-        bullets.update(playerLoc, 1, 50, enemies, obstacleMap);
+        bullets.update(playerLoc, 2, 50, enemies, obstacleMap);
 
 //        System.out.println("Updated background");
 

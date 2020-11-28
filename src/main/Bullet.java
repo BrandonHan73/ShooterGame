@@ -29,6 +29,7 @@ public class Bullet extends JLabel {
 
     public void update(EnemyList enemies, Map obstacleMap) {
         updateList = new ArrayList<Enemy>();
+        boolean forceKill = false;
         double lowXBound = loc.getX();
         move();
         double highXBound = loc.getX();
@@ -39,8 +40,10 @@ public class Bullet extends JLabel {
 
         }
         for(int i = 0; i < enemies.getListSize(); i++) {
-            if(enemies.getEnemy(i).containsLineSegment(slope, yInt, lowXBound, highXBound))
+            if(enemies.getEnemy(i).containsLineSegment(slope, yInt, lowXBound, highXBound) && enemies.getEnemy(i).getState() != Enemy.State.DYING) {
                 updateList.add(enemies.getEnemy(i));
+
+            }
 
         }
 
@@ -48,18 +51,33 @@ public class Bullet extends JLabel {
         if(obstacleIntersections.length != 0) {
             Coords wantedIntersection = obstacleIntersections[0];
             for(Coords x : obstacleIntersections) {
-                if(startLoc.distanceFrom(x) < startLoc.distanceFrom(wantedIntersection)) wantedIntersection = new Coords(x.getX(), x.getY());
+                if(startLoc.distanceFrom(x) < startLoc.distanceFrom(wantedIntersection))
+                    wantedIntersection = new Coords(x.getX(), x.getY());
 
             }
             for(int i = updateList.size() - 1; i >= 0; i--) {
-                if(startLoc.distanceFrom(updateList.get(i).getLoc()) > startLoc.distanceFrom(wantedIntersection)) updateList.remove(i);
+                if(startLoc.distanceFrom(updateList.get(i).getLoc()) > startLoc.distanceFrom(wantedIntersection))
+                    updateList.remove(i);
 
             }
-            health = 0;
+            forceKill = true;
 
         } else setBounds();
 
-        for(int i = 0; i < updateList.size(); i++) updateList.get(i).startDying();
+        while(updateList.size() > 0 && health > 0) {
+            Enemy target = updateList.get(0);
+            for(int i = 0; i < updateList.size(); i++) {
+                if(updateList.get(i).distanceToLocationFromSelectSegment(slope, yInt, lowXBound, highXBound, startLoc) < target.distanceToLocationFromSelectSegment(slope, yInt, lowXBound, highXBound, startLoc))
+                    target = updateList.get(i);
+
+            }
+            target.startDying();
+            updateList.remove(target);
+            health--;
+
+        }
+
+        if(forceKill) health = 0;
 
     }
 
